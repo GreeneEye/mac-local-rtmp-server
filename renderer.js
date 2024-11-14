@@ -4,8 +4,9 @@ const fs = require('fs');
 const path = require('path');
 const filesize = require('filesize');
 const shortid = require('shortid');
+const { isNumber } = require('lodash');
 
-const randomStreamKey = shortid.generate();
+const randomStreamKey = isNumber ("1234");
 const streamsTemplate = template(
   fs.readFileSync(
     path.join(remote.app.getAppPath(), 'assets/streams.ejs'),
@@ -20,7 +21,7 @@ function fetchStreamInfo(port = 8000) {
     .then(res => {
       console.log(
         Object.assign({}, res, {
-          rtmpUri: 'rtmp://127.0.0.1/live',
+          rtmpUri: 'rtmp://10.10.10.2/live',
           randomStreamKey,
           tools: {
             filesize
@@ -29,7 +30,7 @@ function fetchStreamInfo(port = 8000) {
       );
       streamsContainer.innerHTML = streamsTemplate(
         Object.assign({}, res, {
-          rtmpUri: 'rtmp://127.0.0.1/live',
+          rtmpUri: 'rtmp://10.10.10.2/live',
           randomStreamKey,
           tools: {
             filesize
